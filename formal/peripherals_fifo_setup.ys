@@ -1,0 +1,21 @@
+# Observe the actual specialized peripherals instance, not a shadow FIFO.
+hierarchy -top peripherals_fifo_formal
+proc
+expose */w:tx_count */w:rx_count */w:tx_wr */w:tx_rd */w:rx_wr */w:rx_rd */w:tx_push */w:tx_pop */w:rx_push */w:rx_pop */w:tx_write
+cd peripherals_fifo_formal
+connect -port dut tx_count observed_tx_count
+connect -port dut rx_count observed_rx_count
+connect -port dut tx_wr observed_tx_wr
+connect -port dut tx_rd observed_tx_rd
+connect -port dut rx_wr observed_rx_wr
+connect -port dut rx_rd observed_rx_rd
+connect -port dut tx_push observed_tx_push
+connect -port dut tx_pop observed_tx_pop
+connect -port dut rx_push observed_rx_push
+connect -port dut rx_pop observed_rx_pop
+connect -port dut tx_write observed_tx_write
+cd ..
+prep -top peripherals_fifo_formal -flatten
+async2sync
+dffunmap
+check -assert

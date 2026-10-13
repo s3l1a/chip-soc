@@ -1,0 +1,12 @@
+# Proof-only observation ports; the RTL source and shipped interface are unchanged.
+hierarchy -top bus_arbiter_formal
+proc
+expose bus_arbiter/w:busy bus_arbiter/w:owner bus_arbiter/w:next_owner bus_arbiter/w:grant_held bus_arbiter/w:held_owner
+cd bus_arbiter_formal
+connect -port dut busy dut_busy
+connect -port dut owner dut_owner
+connect -port dut next_owner dut_next_owner
+connect -port dut grant_held dut_grant_held
+connect -port dut held_owner dut_held_owner
+cd ..
+prep -top bus_arbiter_formal

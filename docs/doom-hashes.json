@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "scope": "Six consecutive game frames at guest tics 2..7 of Freedoom 0.13.0 Phase 1 DEMO1, with post-load wipe suppression and packed framebuffer stores; not a complete 7117-tic demo",
+  "engine_commit": "e257a09527062bfb986b6e5e0780839b6cbd5b71",
+  "firmware": {
+    "path": "firmware/build/doom.bin",
+    "sha256": "5d44fbc6cf3697f9230acb8de02766317f160c13ed218d43b665249f7421a226",
+    "elf_path": "firmware/build/doom.elf",
+    "elf_sha256": "bbe22468427025ce6a79f89eec5bf9b94c751a1d84d9bfc0993a7e8543a11e77",
+    "toolchain": "xPack GCC 15.2.0-1 (npm package 15.2.0-1.1), binutils 2.45, newlib 4.5.0.20241231",
+    "options": "rv32im_zicsr_zifencei/ilp32, CHIP_TIMEDEMO=1, CHIP_FRAME_LOG=8"
+  },
+  "simulator": "Verilator 5.053 devel, Windows x64; see docs/tooling.md",
+  "cpu_hz": 50000000,
+  "pixel_hz": 25000000,
+  "memory_max_delay": 3,
+  "wad_bytes": 28795076,
+  "wad_sha256": "7323bcc168c5a45ff10749b339960e98314740a734c30d4b9f3337001f9e703d",
+  "summary": {
+    "cycles": 626567682,
+    "retired": 87905457,
+    "memory_bytes": 83780800,
+    "framebuffer_writes": 128000,
+    "frames": 6
+  },
+  "flips": [
+    {"frame": 1, "cycle": 427515162, "cycles_per_frame": 427515162, "memory_beats": 17971454},
+    {"frame": 2, "cycle": 467808002, "cycles_per_frame": 40292840, "memory_beats": 18574557},
+    {"frame": 3, "cycle": 507288002, "cycles_per_frame": 39480000, "memory_beats": 19154071},
+    {"frame": 4, "cycle": 546768002, "cycles_per_frame": 39480000, "memory_beats": 19743761},
+    {"frame": 5, "cycle": 586248002, "cycles_per_frame": 39480000, "memory_beats": 20321480},
+    {"frame": 6, "cycle": 625728002, "cycles_per_frame": 39480000, "memory_beats": 20907966}
+  ],
+  "fnv1a": ["988d1a84", "988d1a84", "988d1a84", "988d1a84", "1e82d262", "6118d8db"],
+  "gametics": [2, 3, 4, 5, 6, 7],
+  "hashes": {
+    "doom_1.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_2.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_3.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_4.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_5.ppm": "e60c7ad972ad71bab7d6fdc7b4fbc7c5b31ea4d0bda1c2fcfe8c1fd7778e58ed",
+    "doom_6.ppm": "6f66a1388cf502e376cb46f1c7bbb6548efc27b0a1f8eed9e567dd116291d04e",
+    "doom_final_a_1.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_a_2.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_a_3.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_a_4.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_a_5.ppm": "e60c7ad972ad71bab7d6fdc7b4fbc7c5b31ea4d0bda1c2fcfe8c1fd7778e58ed",
+    "doom_final_a_6.ppm": "6f66a1388cf502e376cb46f1c7bbb6548efc27b0a1f8eed9e567dd116291d04e",
+    "doom_final_b_1.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_b_2.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_b_3.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_b_4.ppm": "d4784d6ba6e6b7d497a2f2fa1960a579c17f3d079e38b8b65198d96d28cb0062",
+    "doom_final_b_5.ppm": "e60c7ad972ad71bab7d6fdc7b4fbc7c5b31ea4d0bda1c2fcfe8c1fd7778e58ed",
+    "doom_final_b_6.ppm": "6f66a1388cf502e376cb46f1c7bbb6548efc27b0a1f8eed9e567dd116291d04e"
+  }
+}

@@ -1,0 +1,24 @@
+[tasks]
+prove
+cover
+
+[options]
+prove: mode prove
+prove: depth 24
+cover: mode cover
+cover: depth 32
+
+[engines]
+smtbmc z3
+
+[script]
+read_verilog -formal -sv bus_arbiter.sv protocol_monitor.sv bus_arbiter_formal.sv
+script bus_arbiter_setup.ys
+async2sync
+dffunmap
+
+[files]
+../rtl/interconnect/bus_arbiter.sv
+protocol_monitor.sv
+bus_arbiter_formal.sv
+bus_arbiter_setup.ys

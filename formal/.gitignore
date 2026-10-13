@@ -1,0 +1,7 @@
+*_prove/
+*_cover/
+/divider/
+/bus_arbiter/
+/peripherals_fifo/
+*.vvp
+*.log

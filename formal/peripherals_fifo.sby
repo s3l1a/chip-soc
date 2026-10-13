@@ -1,0 +1,24 @@
+[tasks]
+prove
+cover
+
+[options]
+prove: mode prove
+prove: depth 20
+cover: mode cover
+cover: depth 256
+cover: skip 170
+timeout 300
+
+[engines]
+smtbmc z3
+
+[script]
+plugin -i slang
+read_slang --keep-hierarchy --top peripherals_fifo_formal -DFORMAL peripherals.sv peripherals_fifo_formal.sv
+script peripherals_fifo_setup.ys
+
+[files]
+../rtl/peripherals/peripherals.sv
+peripherals_fifo_formal.sv
+peripherals_fifo_setup.ys

@@ -1,0 +1,5 @@
+# Python 3.12 in CI; direct verification dependencies are release-pinned.
+pyslang==11.0.0
+unicorn==2.1.4
+z3-solver==4.15.4.0
+yowasp-yosys==0.69.0.0.post1233

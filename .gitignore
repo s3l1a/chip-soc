@@ -1,0 +1,15 @@
+build/
+external/
+.tools/
+__pycache__/
+*.pyc
+*.vcd
+*.fst
+*.wad
+*.WAD
+*.jou
+*.log
+*.bit
+*.dcp
+.Xil/
+vivado_project/

@@ -1,0 +1,82 @@
+name: Verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CROSS: riscv-none-elf-
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: tools/requirements.txt
+      - name: Native RTL and host build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y iverilog verilator build-essential
+          iverilog -V
+          verilator --version
+      - name: Pinned Python verification tools
+        run: |
+          python -m pip install -r tools/requirements.txt
+          python -m pip check
+      - name: Pinned RISC-V GCC with newlib (Linux x64)
+        shell: bash
+        run: |
+          test "$(uname -m)" = x86_64
+          test -d "$RUNNER_TEMP"
+          archive=xpack-riscv-none-elf-gcc-14.2.0-3-linux-x64.tar.gz
+          curl --fail --location --retry 3 "https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v14.2.0-3/$archive" -o "$RUNNER_TEMP/$archive"
+          echo "f574415b63f12b09bdd3475223ab492a465d23810646c90c13a4c3b676c83503  $RUNNER_TEMP/$archive" | sha256sum --check --strict
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP"
+          toolbin="$RUNNER_TEMP/xpack-riscv-none-elf-gcc-14.2.0-3/bin"
+          test -x "$toolbin/riscv-none-elf-gcc"
+          echo "$toolbin" >> "$GITHUB_PATH"
+          "$toolbin/riscv-none-elf-gcc" --version
+          printf '#include <stdlib.h>\n#include <stdio.h>\n' | "$toolbin/riscv-none-elf-gcc" -march=rv32im_zicsr_zifencei -mabi=ilp32 -E -x c - >/dev/null
+      - name: Frame and Doom log checker self-tests
+        run: |
+          python tools/verify_frame.py --self-test
+          python scripts/check_doom.py --self-test
+      - name: Verilator command-line argument regression
+        run: |
+          mkdir -p build/plusargs
+          verilator --binary --timing --assert --top-module tb_plusargs --Mdir build/plusargs sim/unit/tb_plusargs.sv
+          build/plusargs/Vtb_plusargs +PREFIX=regression +FRAMES=1 +CYCLES=12345678901
+      - name: Lint all RTL, units, independent CPU arithmetic, and monitor rejection
+        run: python scripts/verify_all.py lint unit cpu monitors
+      - name: Diagnostic and boot firmware
+        run: python scripts/verify_all.py firmware
+      - name: Pinned GPL Doom engine build only (no WAD download)
+        run: |
+          python software/fetch_doomgeneric.py
+          make -C firmware doom CROSS="$CROSS" PYTHON=python
+          python software/test_artifacts.py
+      - name: Verilator diagnostic graphical smoke and exact pixel comparison
+        run: python scripts/verify_all.py soc --engine verilator
+      - name: Verification artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification
+          if-no-files-found: warn
+          path: |
+            build/soc/verify_diagnostic_*.ppm
+            build/soc/verify_diagnostic.log
+            build/verification/**/*.trace
+            build/verification/**/*.golden
+            build/verification/**/*.hex
+            build/verification/**/*.bus
+            build/verification/**/*.events
+            build/verification/**/*.json
